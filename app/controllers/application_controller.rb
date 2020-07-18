@@ -1,6 +1,5 @@
 class ApplicationController < ActionController::API
     include HackARocketExceptions
-    before_action :authorized
     
     def encode_token(payload)
         JWT.encode(payload, ENV['SECRET_JWT'])
