@@ -4,6 +4,6 @@ Rails.application.routes.draw do
   resources :appointments
   resources :confirm
   resources :paths, only: [:index]
-  resources :ratings, only: [:create]
+  resources :ratings, only: [:create, :index]
   resources :regular_times
 end
