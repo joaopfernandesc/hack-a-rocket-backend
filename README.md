@@ -27,7 +27,7 @@ A plataforma utiliza das APIs da Zenvia após o acionamento de alguns triggers.
 
 ### Trilhas do usuário
 - **POST /user_paths** - associa uma trilha a um mentor;
-- **GET /user_paths** - pega todas as trilhas de um usuário
+- **GET /user_paths** - pega todas as trilhas de um usuário;
 - **DELETE /user_paths/:id** - desassocia a trilha de um mentor;
 
 ### Mentores
