@@ -1,3 +1,6 @@
 Rails.application.routes.draw do
-  resources :consultant_sessions, only: [:create]
+  resources :sessions, only: [:create]
+  resources :users
+  resources :appointments
+  resources :confirm
 end

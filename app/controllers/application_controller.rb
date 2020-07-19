@@ -19,12 +19,7 @@ class ApplicationController < ActionController::API
     def logged_in_user
         if decoded_token
             id = decoded_token[0]['id']
-            type = decoded_token[0]['type']
-            if type == 'consultant'
-               @consultant = Consultant.find(id) 
-            else
-
-            end
+            @user = User.find(id) 
         end
     end
 

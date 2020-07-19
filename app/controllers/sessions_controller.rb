@@ -1,20 +1,19 @@
-class ConsultantSessionsController < ApplicationController
+class UserSessionsController < ApplicationController
     def create
         begin
             raise HackARocketExceptions::BadParameters if params[:email].nil? || params[:password].nil?
 
-            consultant = Consultant.find_by(email: params[:email])
+            user = User.find_by(email: params[:email])
 
             raise HackARocketExceptions::UnauthorizedOperation if user.nil?
 
-            if consultant.authenticate(params[:password])
-                type = "consultant"
-                token = encode_token({ id: consultant[:id], type: type })
+            if user.authenticate(params[:password])
+                token = encode_token({ id: user[:id], type: type })
             else
                 raise HackARocketExceptions::UnauthorizedOperation
             end
 
-            render json: { token: token, consultant: consultant.json_object }, status: 201
+            render json: { token: token, user: user.json_object }, status: 201
         rescue HackARocketExceptions::UnauthorizedOperation
             render json: { error: 'Incorrect user/password combination' }, status: 401
           rescue HackARocketExceptions::BadParameters
