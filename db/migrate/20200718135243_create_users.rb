@@ -6,11 +6,11 @@ class CreateUser < ActiveRecord::Migration[6.0]
       t.string :email
       t.string :password_digest
       t.string :phone_number
-      t.boolean :is_confirmed
+      t.boolean :is_confirmed, default: false
       t.string :confirmation_number
       t.integer :user_type
-      t.integer :total_ratings
-      t.float :average_rating
+      t.integer :total_ratings, default: 0
+      t.float :average_rating, default: 0
       t.string :CEP
       t.string :CPF
 
