@@ -6,9 +6,4 @@ class CreatePaths < ActiveRecord::Migration[6.0]
       t.timestamps
     end
   end
-
-  names = ["Jurídico", "Negócios", "Marketing", "Finanças", "Tecnologia", "Inovação", "Mídias Digitais"]
-  starting_paths = names.map! { |x| {name: x}}
-
-  Path.create()
 end

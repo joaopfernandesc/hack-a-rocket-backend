@@ -16,7 +16,7 @@ development:
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  database: rango_livre_test
+  database: hack_a_rocket_test
 
 production:
   <<: *default

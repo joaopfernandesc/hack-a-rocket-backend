@@ -1,4 +1,4 @@
-class UserSessionsController < ApplicationController
+class SessionsController < ApplicationController
     def create
         begin
             raise HackARocketExceptions::BadParameters if params[:email].nil? || params[:password].nil?
