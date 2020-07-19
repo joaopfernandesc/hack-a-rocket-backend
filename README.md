@@ -1,4 +1,6 @@
-# Zenvia Experience Hackathon - Hack a Rocket! - Time 1
+# Zenvia Experience Hackathon - Hack a Rocket! - Time 
+
+![alt text](https://github.com/sifthedog/hack-a-rocket-backend/blob/master/pp.jpeg?raw=true)
 
 Neste repositório você encontra a parte do back-end proposta para o Hackathon. Trata-se da **dora****.co**, uma solução inovadora que visa unir universitário e profissionais de consultoria a pequenas e médias empresas.
 
