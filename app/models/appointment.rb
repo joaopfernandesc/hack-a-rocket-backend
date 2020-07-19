@@ -49,7 +49,36 @@ class Appointment < ApplicationRecord
 				}
 			]
 		})
-    end    
+    end
+
+    def send_warning_message
+        Time.zone = "America/Sao_Paulo"
+        
+        mentor = User.find(self.mentor_id)
+        responsible = User.find(self.responsible_id)
+
+        execute_warning_message(mentor, responsible, path)
+        execute_warning_message(responsible, mentor, path)
+        
+        self.update(warning_pending: false)
+    end
+    
+    def execute_warning_message(sender, recipient, path)
+        formatted_time = Time.zone.at(self.start_timestamp).strftime("%d/%m/%Y às %H:%Mhs")
+        content = "Olá, #{recipient.first_name}!\n\nVocê tem consultoria de *#{path.name}* daqui a pouco!\n\nAgendada com #{sender.get_full_name} no dia #{formatted_time}."
+
+        HTTP.headers("X-API-TOKEN".to_sym => ENV["ZENVIA_TOKEN"]).post("https://api.zenvia.com/v1/channels/whatsapp/messages", :json => {
+			from: ENV["ZENVIA_NAME"],
+			to: "55" + recipient[:phone_number],
+			contents: [
+				{
+					type: "text",
+					text: content
+				}
+			]
+		})
+    end
+    
     
     def send_cancel_message
         if self.canceled_id == self.responsible_id
