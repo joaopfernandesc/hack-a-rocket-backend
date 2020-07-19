@@ -54,4 +54,23 @@ class User < ApplicationRecord
         return details.json_object
     end
     
+    def send_appointment_confirmation
+        phone_number = "55" + self.phone_number
+        content = ""
+
+        HTTP.headers("X-API-TOKEN".to_sym => ENV["ZENVIA_TOKEN"]).post("https://api.zenvia.com/v1/channels/whatsapp/messages", :json => {
+			from: ENV["ZENVIA_NAME"],
+			to: phone_number,
+			contents: [
+				{
+					type: "text",
+					text: content
+				}
+			]
+		})
+    end
+    def get_full_name
+        return self.first_name + " " + self.last_name
+    end
+    
 end
