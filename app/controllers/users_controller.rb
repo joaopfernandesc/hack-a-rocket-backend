@@ -67,7 +67,7 @@ class UsersController < ApplicationController
         params.permit(:college_name, :current_semester, :registration_number, :graduation_course, :description, :website)
     end
     def company_params
-        params.permit(:CNPJ, :CEP, :category)
+        params.permit(:CNPJ, :category)
     end
     
     

@@ -28,7 +28,7 @@ class User < ApplicationRecord
     
     def send_confirmation_number
         phone_number = "55" + self.phone_number
-        content = "Obrigado por se cadastrar no Conecta App. Seu token de confirmação é *#{self.confirmation_number[0..2]} #{self.confirmation_number[3..-1]}*"
+        content = "Olá, #{self.first_name}. Obrigada por se cadastrar no dora.co!\n\nSeu token de confirmação é *#{self.confirmation_number[0..2]}-#{self.confirmation_number[3..-1]}*"
 
         HTTP.headers("X-API-TOKEN".to_sym => ENV["ZENVIA_TOKEN"]).post("https://api.zenvia.com/v1/channels/whatsapp/messages", :json => {
 			from: ENV["ZENVIA_NAME"],

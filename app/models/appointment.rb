@@ -10,6 +10,7 @@ class Appointment < ApplicationRecord
         path = Path.find(path_id).json_object
 
         return {
+            id: self.id,
             start_timestamp: self.start_timestamp,
             end_timestamp: self.end_timestamp,
             mentor: mentor,
@@ -28,18 +29,19 @@ class Appointment < ApplicationRecord
         
         mentor = User.find(self.mentor_id)
         responsible = User.find(self.responsible_id)
+        path = Path.find(self.path_id)
 
-        execute_scheduled_message(mentor, responsible)
-        execute_scheduled_message(responsible, mentor)
+        execute_scheduled_message(mentor, responsible, path)
+        execute_scheduled_message(responsible, mentor, path)
     end
 
-    def execute_scheduled_message(sender, recipient)
-        formatted_time = Time.zone.at(self.start_timestamp).strftime("%d/%m/% às %H:%Mhs")
-        content = "Olá!\nVocê tem uma nova consultoria agendada com #{sender.get_full_name} na data #{formatted_time}."
+    def execute_scheduled_message(sender, recipient, path)
+        formatted_time = Time.zone.at(self.start_timestamp).strftime("%d/%m/%Y às %H:%Mhs")
+        content = "Olá, #{recipient.first_name}!\n\nVocê tem uma nova consultoria de *#{path.name}* agendada com #{sender.get_full_name} no dia #{formatted_time}."
 
         HTTP.headers("X-API-TOKEN".to_sym => ENV["ZENVIA_TOKEN"]).post("https://api.zenvia.com/v1/channels/whatsapp/messages", :json => {
 			from: ENV["ZENVIA_NAME"],
-			to: recipient[:phone_number],
+			to: "55" + recipient[:phone_number],
 			contents: [
 				{
 					type: "text",
@@ -55,12 +57,14 @@ class Appointment < ApplicationRecord
         else
             user_to_warn = User.find(self.responsible_id)
         end
+        canceling_user = User.find(self.canceled_id)
+        path = Path.find(self.path_id)
         Time.zone = "America/Sao_Paulo"
-        formatted_time = Time.zone.at(self.start_timestamp).strftime("%d/%m/% às %H:%Mhs")
-        content = "Olá, a consultoria que você tinha agendado na data #{formatted_time} foi cancelada pela outra parte."
+        formatted_time = Time.zone.at(self.start_timestamp).strftime("%d/%m/%Y às %H:%Mhs")
+        content = "Olá, a consultoria de *#{path.name}* que você tinha agendado na data #{formatted_time} foi cancelada pela #{canceling_user.get_full_name}."
         phone_number = user_to_warn[:phone_number]
         cancel_responsible = User.find(self.canceled_id)
-        phone_number = cancel_responsible[:phone_number]
+        phone_number = "55" + cancel_responsible[:phone_number]
 
         HTTP.headers("X-API-TOKEN".to_sym => ENV["ZENVIA_TOKEN"]).post("https://api.zenvia.com/v1/channels/whatsapp/messages", :json => {
 			from: ENV["ZENVIA_NAME"],
