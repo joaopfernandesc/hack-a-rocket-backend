@@ -7,6 +7,7 @@ class CreateStudents < ActiveRecord::Migration[6.0]
       t.string :registration_number
       t.string :graduation_course
       t.string :description, limit: 500
+      t.string :website
 
       t.timestamps
     end

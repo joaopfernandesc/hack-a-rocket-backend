@@ -1,4 +1,6 @@
-class UsersController < ApplicationController
+class RatingsController < ApplicationController
+    before_action :authorized
+    
     def create
         begin
             
@@ -7,12 +9,5 @@ class UsersController < ApplicationController
             Rails.logger.error e.backtrace.join("\n")
         end
     end
-    
-    def update
-        
-    end
-    def show
-        
-    end   
     
 end

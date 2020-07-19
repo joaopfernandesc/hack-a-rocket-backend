@@ -1,6 +1,9 @@
 Rails.application.routes.draw do
   resources :sessions, only: [:create]
-  resources :users
+  resources :users, only: [:create, :update, :show]
   resources :appointments
   resources :confirm
+  resources :paths, only: [:index]
+  resources :ratings, only: [:create]
+  resources :regular_times
 end
