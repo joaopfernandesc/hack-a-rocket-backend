@@ -6,6 +6,9 @@ class User < ApplicationRecord
     after_create :send_confirmation_number
 
     def json_object
+        user_paths = UserPath.where(user_id: self.id).pluck(:path_id)
+        paths = Path.where(id: user_paths).map {|x| x.json_object}
+
         return {
             id: self.id,
             first_name: self.first_name,
@@ -18,6 +21,7 @@ class User < ApplicationRecord
             total_ratings: self.total_ratings,
             CPF: self.CPF,
             CEP: self.CEP,
+            paths: paths,
             details: self.get_details
         }
     end

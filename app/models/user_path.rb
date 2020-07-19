@@ -1,0 +1,2 @@
+class UserPath < ApplicationRecord
+end

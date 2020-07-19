@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_19_154136) do
+ActiveRecord::Schema.define(version: 2020_07_19_205351) do
 
   create_table "appointments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "start_timestamp"
@@ -85,6 +85,13 @@ ActiveRecord::Schema.define(version: 2020_07_19_154136) do
     t.string "graduation_course"
     t.string "website"
     t.string "description", limit: 500
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "user_paths", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "path_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

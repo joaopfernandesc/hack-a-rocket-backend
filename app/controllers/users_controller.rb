@@ -15,6 +15,8 @@ class UsersController < ApplicationController
                 else
                     raise HackARocketExceptions::BadParameters
                 end
+                user_paths = params[:path_ids].map {|x| {user_id: user[:id], path_id: x} }
+                UserPath.create(user_paths) if user_paths.size > 0
                 attached[:user_id] = user[:id]
                 attached.save!
             end
@@ -31,7 +33,9 @@ class UsersController < ApplicationController
     
     def update
         begin
-            
+            @user.update(user_params)
+
+            render json: @user.json_object, status: 200
         rescue => e
             Rails.logger.error e.message
             Rails.logger.error e.backtrace.join("\n")
@@ -69,8 +73,4 @@ class UsersController < ApplicationController
     def company_params
         params.permit(:CNPJ, :category)
     end
-    
-    
-    
-    
 end
