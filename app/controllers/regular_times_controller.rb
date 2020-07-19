@@ -18,13 +18,16 @@ class RegularTimesController < ApplicationController
     end
     def index
         begin
-            user_id = @user[:id]
+            raise HackARocketExceptions::BadParameters if params[:user_id.nil?]
+            user_id = params[:user_id]
 
             rts = RegularTime.where(user_id: user_id)
 
             rts = rts.map { |x| x.json_object }
 
             render json: rts, status: 200
+        rescue HackARocketExceptions::BadParameters
+            render json: {error: "Bad parameters"}, status: 400
         rescue => e
             Rails.logger.error e.message
             Rails.logger.error e.backtrace.join("\n")

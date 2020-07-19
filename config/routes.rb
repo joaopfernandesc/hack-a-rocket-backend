@@ -6,4 +6,5 @@ Rails.application.routes.draw do
   resources :paths, only: [:index]
   resources :ratings, only: [:create, :index]
   resources :regular_times
+  resources :user_paths, only: [:create, :destroy]
 end

@@ -35,7 +35,7 @@ class UsersController < ApplicationController
         begin
             @user.update(user_params)
 
-            render json: @user.json_object, status: 200
+            render json: @user.json_object, status: 204
         rescue => e
             Rails.logger.error e.message
             Rails.logger.error e.backtrace.join("\n")
