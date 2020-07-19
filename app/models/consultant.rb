@@ -5,8 +5,8 @@ class Consultant < ApplicationRecord
             college_name: self.college_name,
             experience_years: self.experience_years,
             website: self.website,
-            graduation_course: self.graduation_course
-            descriptio: self.description
+            graduation_course: self.graduation_course,
+            description: self.description
         }
     end
     

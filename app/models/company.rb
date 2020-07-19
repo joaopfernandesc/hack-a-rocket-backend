@@ -3,7 +3,8 @@ class Company < ApplicationRecord
         return {
             user_id: self.user_id,
             CNPJ: self.CNPJ,
-            category: self.category
+            category: self.category,
+            company_name: self.company_name
         }
     end
     

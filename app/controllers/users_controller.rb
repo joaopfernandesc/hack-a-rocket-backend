@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-    before_action :authorized, only: [:update]
+    before_action :authorized, only: [:update, :show]
     def create
         begin
             user = User.new(user_params)
@@ -19,7 +19,7 @@ class UsersController < ApplicationController
                 attached.save!
             end
 
-            render json: {user: user.json_object}, status: 201
+            render json: user.json_object, status: 201
         rescue HackARocketExceptions::BadParameters
             render status: 400
         rescue => e
@@ -40,7 +40,13 @@ class UsersController < ApplicationController
     end
     def show
         begin
-            
+            id = params[:id]
+
+            user = User.find(id)
+
+            render json: user.json_object, status: 200
+        rescue ActiveRecord::RecordNotFound
+            render status: 404
         rescue => e
             Rails.logger.error e.message
             Rails.logger.error e.backtrace.join("\n")
@@ -51,7 +57,7 @@ class UsersController < ApplicationController
     private
 
     def user_params
-        params.permit(:first_name, :last_name, :email, :password_digest, :phone_number, :user_type, :password)
+        params.permit(:first_name, :last_name, :email, :phone_number, :user_type, :password)
     end
 
     def consultant_params

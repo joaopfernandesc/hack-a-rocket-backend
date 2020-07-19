@@ -8,7 +8,7 @@ class SessionsController < ApplicationController
             raise HackARocketExceptions::UnauthorizedOperation if user.nil?
 
             if user.authenticate(params[:password])
-                token = encode_token({ id: user[:id], type: type })
+                token = encode_token({ id: user[:id] })
             else
                 raise HackARocketExceptions::UnauthorizedOperation
             end

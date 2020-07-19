@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+    has_secure_password
     enum user_type: { "Empresa": 0, "Estudante": 1, "Consultor": 2}
 
     before_create :set_confirmation_number
@@ -15,12 +16,14 @@ class User < ApplicationRecord
             user_type: self.user_type,
             average_rating: self.average_rating,
             total_ratings: self.total_ratings,
+            CPF: self.CPF,
+            CEP: self.CEP,
             details: self.get_details
         }
     end
 
     def set_confirmation_number
-        self.set_confirmation_number 
+        self.confirmation_number = 6.times.map { (0..9).to_a.sample }.join
     end
     
     def send_confirmation_number

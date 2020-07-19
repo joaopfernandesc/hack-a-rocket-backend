@@ -17,10 +17,14 @@ class ApplicationController < ActionController::API
     end
     
     def logged_in_user
-        if decoded_token
-            id = decoded_token[0]['id']
+        if encoded_token
+            id = encoded_token[0]['id']
             @user = User.find(id) 
+
+            return true
         end
+        
+        return false
     end
 
     def logged_in?
@@ -29,7 +33,7 @@ class ApplicationController < ActionController::API
     
     def authorized
         begin
-            logged_in?    
+            raise JWT::VerificationError if !logged_in?
         rescue JWT::VerificationError
             render json: {error: 'Unauthorized token'},status: 401
         rescue JWT::DecodeError
