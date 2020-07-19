@@ -4,7 +4,9 @@
 
 Neste repositório você encontra a parte do back-end proposta para o Hackathon. Trata-se da **dora****.co**, uma solução inovadora que visa unir universitário e profissionais de consultoria a pequenas e médias empresas.
 
-A plataforma utiliza das APIs da Zenvia após algum desses triggers serem acionados:
+A plataforma utiliza das APIs da Zenvia após o acionamento de alguns triggers.
+
+### Triggers de acionamento da API Zenvia:
 - Para confirmar o cadastro, um token é enviado via WhatsApp para o usuário;
 - Ao ser agendada uma mentoria, as duas partes recebem um whatsapp com data e hora;
 - Sempre que faltar 1 hora para a mentoria, as duas partes recebem uma mensagem via WhatsApp lembrando da mentoria (tem uma rake que deve ser executada via Crontab para checar quais usuários devem receber a mensagem);
