@@ -4,6 +4,21 @@ class Appointment < ApplicationRecord
     after_create :send_scheduled_messages
     after_destroy :send_cancel_message
 
+    def json_object
+        mentor = User.find(mentor_id).json_object
+        responsible = User.find(responsible_id).json_object
+        path = Path.find(path_id).json_object
+
+        return {
+            start_timestamp: self.start_timestamp,
+            end_timestamp: self.end_timestamp,
+            mentor: mentor,
+            responsible: responsible,
+            path: path,
+            canceled_id: self.canceled_id
+        }
+    end
+    
     def set_send_timestamp
         self.send_timestamp = self.start_timestamp - 3600
     end
